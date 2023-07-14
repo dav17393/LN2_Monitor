@@ -16,3 +16,8 @@ The third element will only return either 2 or 11, with 2 meaning the scale is i
 The fourth element is the scale factor. A value of 255 means the scaling factor is 10^-1(0.1), a value of 254 means a scaling factor of 10^-2(0.01), and so on. 
 The fourth and fifth elements together are used to determine the weight.
 The sixth element is also negatable. 
+
+
+After opening up the program, download both softwares and run the code by changing the directory to the "dymo scale" folder. Then switch powershell to python and import the d1 file. Set scale = d1.SCL() and run scale.main() or scale.plot() to start plotting and transferring the data to a txt file. 
+
+Enjoy!

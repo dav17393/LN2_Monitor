@@ -20,6 +20,6 @@ The sixth element is also negatable.
 
 **How to run the Software:**
 
-After opening up the program, download both softwares and run the code by changing the directory to the "dymo scale" folder. Then switch powershell to python and import the d1 file. Set scale = d1.SCL() and run scale.main() or scale.plot() to start plotting and transferring the data to a txt file. 
+After opening up the program, download both softwares and run the code by changing the directory to the "dymo scale" folder. Then switch powershell to python and import the d1 file. Set scale = d1.SCL() and run scale.main() or scale.plot() to start plotting and transferring the data to a txt file. You can also run scale.getkg() or scale.getdata() to get the kg or the array respectively. 
 
 Enjoy!

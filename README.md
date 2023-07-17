@@ -1,13 +1,13 @@
 # LN2_Monitor
 This project will use a USB connection to a dymo scale to help graph and weigh the percentage full of an LN2 trap. The percentage full is based on the maximum weight a LN2 trap can hold(about 28.26kg)
 
-Required Softwares:
+**Required Softwares:**
 
 PyUSB 1.0 (https://sourceforge.net/projects/pyusb/files/PyUSB%201.0/)
 
 libusb-win32 (https://sourceforge.net/projects/libusb-win32/)
 
-The array that is returned when calling the scale.main(), scale.plot(), or scale.getdata() functions can be translated as shown below:
+**The array that is returned when calling the scale.main(), scale.plot(), or scale.getdata() functions can be translated as shown below:**
 array('B'[3, 2, 11, 255, 0, 0])
 
 The first element is always 3 and negatable.
@@ -17,6 +17,8 @@ The fourth element is the scale factor. A value of 255 means the scaling factor 
 The fourth and fifth elements together are used to determine the weight.
 The sixth element is also negatable. 
 
+
+**How to run the Software:**
 
 After opening up the program, download both softwares and run the code by changing the directory to the "dymo scale" folder. Then switch powershell to python and import the d1 file. Set scale = d1.SCL() and run scale.main() or scale.plot() to start plotting and transferring the data to a txt file. 
 

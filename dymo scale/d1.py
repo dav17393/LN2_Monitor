@@ -51,7 +51,7 @@ class SCL():
         while self.per == None:
             self.getdata()
             try:
-                self.per = (((self.data[4] + (256*self.data[5]))/10)/28.2588)*100
+                self.per = (((self.data[4] + (256*self.data[5]))/10)/self.weigh)*100
             except:
                 time.sleep(0.1)
                 continue
@@ -72,6 +72,7 @@ class SCL():
         print(self.kg)       
     
     def plot(self, interval=1000):
+        self.weigh = float(input("What is the Maximum Weight(kg) of the Cryostat?:"))
         x_data, y_data = [], []
         now = datetime.now()
         date_time = now.strftime("%Y_%m_%d, Dymo")

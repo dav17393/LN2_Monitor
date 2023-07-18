@@ -27,10 +27,6 @@ class SCL():
     
     if __name__ == "__main":
         main()
-    
-   
-     
-       
 
     def getdata(self):
         try:
@@ -97,9 +93,7 @@ class SCL():
             figure.gca().relim()
             figure.gca().autoscale_view()
             return line,
-        
-        
-       
+
         animation = FuncAnimation(figure, update, interval=self.interval)
       
         pyplot.show()

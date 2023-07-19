@@ -8,6 +8,8 @@ PyUSB 1.0 (https://sourceforge.net/projects/pyusb/files/PyUSB%201.0/)
 libusb-win32 (https://sourceforge.net/projects/libusb-win32/)
 
 pip install ln2-monitor
+then go into python and input "from ln2_monitor import d1". 
+input "scale = d1.SCL()"
 
 **How to run the Software:**
 

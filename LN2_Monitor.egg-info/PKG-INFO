@@ -1,0 +1,8 @@
+Metadata-Version: 2.1
+Name: ln2-monitor
+Version: 0.3.6
+Summary: Plotting data for ln2 masses
+Home-page: https://github.com/dav17393/LN2_Monitor
+Author: Jordan Wheeler, David Shin
+Author-email: wheeler1711@gmail.com
+Requires-Python: >3.7

@@ -22,4 +22,6 @@ The sixth element is also negatable.
 
 After opening up the program, download both softwares and run the libusb-win32 software. In device selection, select the USB input device with product ID 8009(pid:8009). Then pipinstall pyusb, numpy, and matplot. Then run the code by changing the directory whichever folder the d1 file was downloaded to. Then switch powershell to python and import the d1 file. Set scale = d1.SCL() and run scale.main() or scale.plot() to start plotting and transferring the data to a txt file. You can also run scale.getkg() or scale.getdata() to get the kg or the array respectively. The basic minimum and maximum weights(kg) are set to default as the blucifer cryostat. Scale.setweight() can be run to change the minumum and maximum weight of the cryostat.
 
+To turn off "auto-sleep" mode on the scale, hold the kg/lb button and turn the scale on. 
+
 Enjoy!

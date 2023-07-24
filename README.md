@@ -2,12 +2,12 @@
 This project will use a USB connection to a dymo scale to help graph and weigh the percentage full of an LN2 trap. The percentage full is based on the maximum weight a LN2 trap can hold(about 28.26kg)
 
 **Required Softwares:**
-
+download the softwares below first:
 PyUSB 1.0 (https://sourceforge.net/projects/pyusb/files/PyUSB%201.0/)
 
 libusb-win32 (https://sourceforge.net/projects/libusb-win32/)
 
-pip install ln2-monitor
+to install the code: python3 -m pip install LN2-Monitor
 then go into python and input "from ln2_monitor import d1". 
 input "scale = d1.SCL()"
 

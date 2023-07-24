@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+
+
+[project]
+name = "LN2_Monitor"
+version = "3.11.7"
+authors = [
+  { name="dav17393, wheeler1711", email="wheeler1711@gmail.com" },
+]
+description = "A small example package"
+readme = "README.md"
+requires-python = ">=3.7"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = ["pyusb", "matplotlib", "numpy"]
+
+[project.urls]
+"Homepage" = "https://github.com/dav17393/LN2_Monitor"
+

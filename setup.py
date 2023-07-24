@@ -16,3 +16,5 @@ setup(name='ln2_monitor',
                         'matplotlib>=3.5.2',
                         'pyusb',]
       )
+      
+      

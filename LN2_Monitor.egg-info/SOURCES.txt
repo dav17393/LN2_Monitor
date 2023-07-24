@@ -1,4 +1,5 @@
 README.md
+pyproject.toml
 setup.py
 LN2_Monitor.egg-info/PKG-INFO
 LN2_Monitor.egg-info/SOURCES.txt

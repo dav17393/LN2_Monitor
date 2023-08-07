@@ -3,7 +3,6 @@ This project will use a USB connection to a dymo scale to help graph and weigh t
 
 **Required Softwares:**
 download the softwares below first:
-PyUSB 1.0 (https://sourceforge.net/projects/pyusb/files/PyUSB%201.0/)
 
 libusb-win32 (https://sourceforge.net/projects/libusb-win32/)
 

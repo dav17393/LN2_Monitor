@@ -97,7 +97,7 @@ class SCL():
             figure.gca().relim()
             figure.gca().autoscale_view()
             pyplot.plot(x_data, y_data, '-', color='blue')
-            if self.per > 10:
+            if self.per > 20:
                 ax.set_facecolor('white')
             if self.per < 20:
                 ax.set_facecolor('red')

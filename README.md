@@ -20,11 +20,11 @@ After opening up the program, download the software above and run the software. 
 
 
 **The array that is returned when calling the scale.main(), scale.plot(), or scale.getdata() functions can be translated as shown below:**
-array('B'[3, 2, 11, 255, 0, 0])
+array('B'[3, 2, 12, 255, 0, 0])
 
 The first element is always 3 and negatable.
 The second element is also negatable.
-The third element will only return either 2 or 11, with 2 meaning the scale is in kg mode and 11 meaning the scale is in lbs/oz mode.
+The third element will only return either 3 or 12, with 3 meaning the scale is in kg mode and 12 meaning the scale is in lbs/oz mode.
 The fourth element is the scale factor. A value of 255 means the scaling factor is 10^-1(0.1), a value of 254 means a scaling factor of 10^-2(0.01), and so on. 
 The fourth and fifth elements together are used to determine the weight.
 The sixth element is also negatable. 

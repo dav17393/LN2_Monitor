@@ -1,0 +1,19 @@
+How to upload code to pypi
+
+
+**Remember to switch the version file in the .toml within Github to a higher version
+
+This method requires a specifically formatted folder. There is one large folder(which will be your overall directory in
+Github, mine is "LN2_Monitory"), and inside that large folder there is: 
+a pyproject.toml(example format in Github), an optional liscense, .gitignore, read me, and 
+a folder for your project(mine is "ln2_monitor") containing an __init__.py your project (mine is "d1.py")
+
+Download the zip file of the updated project from github and unzip(extract all) the contents. Change the directory to wherever 
+the unzipped folder is, change the directory again to the folder within the overall folder 
+(cd LN2_Monitor-main, cd LN2_Monitor-main)(switch to the folder within the large overall folder in the directory
+and run the following:
+
+Run "python3 -m pip install --upgrade build" and "python3 -m build"
+
+Then from the same directory as the pyproject.toml run "python3 -m pip install --upgrade twine" and 
+"python3 -m twine upload --repository pypi dist/* --verbose" Then input your username and password

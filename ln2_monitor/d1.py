@@ -28,7 +28,7 @@ class SCL():
             self.weighmax = float(weightmax_string)
             self.weighmin = float(weighmin_string)
         except:
-            print("no default weight found, weight is now set to a standard LN2 trap(max:28.2588, min:10.97694)")
+            print("no default weight found, weight is now set to a standard LN2 trap(max:29.4588kg, min:12.17694kg)")
             self.weighmax = 29.4588
             self.weighmin = 12.17694
 
@@ -123,10 +123,9 @@ class SCL():
         line, = pyplot.plot_date(x_data, y_data, '-')
         self.interval = interval
         pyplot.title('LN2 Trap Fullness')
-        pyplot.ylabel('Percent Full')
         pyplot.xlabel('Time')
-       
-        
+        pyplot.ylabel('Percent Full')
+
         def update(frame):
             self.getpercentfull()
             ax = pyplot.gca()
@@ -138,6 +137,8 @@ class SCL():
             figure.gca().relim()
             figure.gca().autoscale_view()
             pyplot.plot(x_data, y_data, '-', color='blue')
+            ax.set_title('LN2 Trap Fullness' +' - '+ 'Percentage Full:' + str(round(self.per,2)) + '%')
+    
             if self.per > 20:
                 ax.set_facecolor('white')
             if self.per < 20:

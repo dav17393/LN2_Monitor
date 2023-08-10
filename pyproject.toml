@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "LN2_Monitor"
-version = "0.0.5"
+version = "0.0.9"
 authors = [
   { name="dav17393, wheeler1711", email="wheeler1711@gmail.com" },
 ]

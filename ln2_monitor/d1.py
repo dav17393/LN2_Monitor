@@ -18,6 +18,8 @@ class SCL():
         self.device.set_configuration()
         self.endpoint = self.device[0][(0,0)][0]
         self.data = None
+        self.getdata()
+
         try:
             file=open("config.txt", "r")
             lines = file.readlines()
@@ -29,6 +31,9 @@ class SCL():
             print("no default weight found, weight is now set to a standard LN2 trap(max:28.2588, min:10.97694)")
             self.weighmax = 29.4588
             self.weighmin = 12.17694
+
+        
+        
     def plotdata(self):
         date_time = datetime.now().strftime("%Y_%m_%d Dymo")
         x_ticks = []
@@ -41,7 +46,6 @@ class SCL():
         for i in range(0,len(liness)):
             y_values.append(float(liness[i].split(",")[1].split("%")[0]))
             x_values.append(datetime.strptime((liness[i].split(",")[0]),"%H:%M:%S") )
-       
         line, = pyplot.plot_date(x_values, y_values, '-')
         pyplot.title('LN2 Trap Fullness(based on the txt file)')
         pyplot.ylabel('Percent Full')
@@ -71,7 +75,7 @@ class SCL():
     def setweight(self):
         self.weighmax = float(input("What is the Maximum Weight(kg) of the LN2 Trap?:"))
         self.weighmin = float(input("What is the Minumum Weight(kg) of the LN2 Trap?:"))
-        self.config = input("Would you like to save these values in a txt file?(y/n):")
+        self.config = input("Would you like to save these values in a txt file and for future uses?(y/n):")
         if str(self.config) == 'y':
             self.tfile = open('config'+ '.txt', 'a')   
             items = "max_weight" + ":" + str(self.weighmax) + "kg" + "\n" + "min_weight" + ":" + str(self.weighmin)+"kg"
@@ -83,10 +87,11 @@ class SCL():
     
     def getpercentfull(self):
         self.per= None
+        self.getkg()
         while self.per == None:
             self.getdata()
             try:
-                self.per =  ((((self.data[4] + (256*self.data[5]))/10)-self.weighmin)/(self.weighmax-self.weighmin))*100
+                self.per =  ((((self.lbkg)-self.weighmin)/(self.weighmax-self.weighmin))*100)
             except:
                 time.sleep(0.1)
                 continue
@@ -95,16 +100,19 @@ class SCL():
     
     def getkg(self):
         self.kg = None
-        
         while self.kg == None:
             self.getdata()
             try:
                 self.kg = ((self.data[4] + (256*self.data[5]))/10)
+                if int(self.data[2]) == 12:
+                    self.lbkg = (self.kg/2.205)
+                else:
+                    self.lbkg = (self.kg)
 
             except:
                 time.sleep(0.1)
                 continue
-        print(self.kg)       
+        print(round(self.lbkg,1))       
     
     def plot(self, interval=1000000):
         x_data, y_data = [], []

@@ -3,6 +3,8 @@ import usb.util
 import time
 import numpy as np
 import math
+import os
+import sys
 
 from datetime import datetime
 from matplotlib import pyplot
@@ -19,6 +21,8 @@ class SCL():
         self.endpoint = self.device[0][(0,0)][0]
         self.data = None
         self.getdata()
+        self.columns,self.lines = os.get_terminal_size()
+        self.old_percent_str = None
 
         try:
             file=open("config.txt", "r")
@@ -29,9 +33,28 @@ class SCL():
             self.weighmin = float(weighmin_string)
         except:
             print("no default weight found, weight is now set to a standard LN2 trap(max:29.4588kg, min:12.17694kg)")
-            self.weighmax = 29.4588
-            self.weighmin = 12.17694
+            self.weighmax = 29.46
+            self.weighmin = 12.18
 
+    def printdata(self):
+        time_str = "|"+self.curr_time.strftime("%m/%d/%y, %H:%M:%S ")
+        percent_str = " "+str(round(self.per,1))+"%|"
+        if len(percent_str)<7:
+            percent_str = " "+percent_str
+        bar_str_length = self.columns - len(percent_str)-len(time_str)-2
+        bar_str = ""
+        for i in range(0,int(self.per/100*bar_str_length)):
+            bar_str = bar_str + "#"
+        for i in range(int(self.per/100*bar_str_length),bar_str_length):
+            bar_str = bar_str + " "
+        print_str = percent_str+bar_str+time_str
+        if self.old_percent_str is None: #first print
+            print(print_str,end = "\r",flush = True)
+        elif self.old_percent_str == percent_str: #just update time no new line
+            print(print_str,end = "\r",flush = True)
+        else: #new line
+            print(print_str,flush = True)
+        self.old_percent_str = percent_str
         
         
     def plotdata(self):
@@ -52,12 +75,6 @@ class SCL():
         pyplot.xlabel('Time')
         pyplot.xticks(rotation = 30)
         pyplot.show()
-
-    def main(self):
-        self.plot()
-    
-    if __name__ == "__main":
-        main()
     
     def getdata(self):
         try:
@@ -69,7 +86,7 @@ class SCL():
             self.device.set_configuration()
             self.endpoint = self.device[0][(0,0)][0]
             self.data = self.device.read(self.endpoint.bEndpointAddress,self.endpoint.wMaxPacketSize)
-        print (self.data)
+        #print (self.data)
         
      
     def setweight(self):
@@ -95,7 +112,7 @@ class SCL():
             except:
                 time.sleep(0.1)
                 continue
-            print(self.per)
+            #print(self.per)
         return self.per
     
     def getkg(self):
@@ -112,32 +129,36 @@ class SCL():
             except:
                 time.sleep(0.1)
                 continue
-        print(round(self.lbkg,1))       
+        #print(round(self.lbkg,1))       
     
-    def plot(self, interval=1000000):
-        x_data, y_data = [], []
-        date_time = datetime.now().strftime("%Y_%m_%d Dymo")
+    def plot(self, interval=60):
+        self.getpercentfull()
+        self.curr_time = datetime.now()
+        x_data, y_data = [self.curr_time], [self.per]
+        date_time = datetime.now().strftime("%Y_%m_%d_log")
         self.tfile = open(date_time+ '.txt', 'a')
     
         figure = pyplot.figure()
         line, = pyplot.plot_date(x_data, y_data, '-')
         self.interval = interval
-        pyplot.title('LN2 Trap Fullness')
+        pyplot.title('Percentage Full: ' + str(round(self.per,2)) + '%')
         pyplot.xlabel('Time')
         pyplot.ylabel('Percent Full')
 
         def update(frame):
             self.getpercentfull()
             ax = pyplot.gca()
-            x_data.append(datetime.now())
+            self.curr_time = datetime.now()
+            self.printdata()
+            x_data.append(self.curr_time)
             y_data.append(self.per)
-            items = str(datetime.now().strftime("%H:%M:%S")) +","+" "+str(round(self.per,2))+"%"+"\n"
+            items = str(self.curr_time.strftime("%H:%M:%S")) +","+" "+str(round(self.per,2))+"%"+"\n"
             self.tfile.write(items)
             line.set_data(x_data, y_data)
             figure.gca().relim()
-            figure.gca().autoscale_view()
+            figure.gca().autoscale()
             pyplot.plot(x_data, y_data, '-', color='blue')
-            ax.set_title('LN2 Trap Fullness' +' - '+ 'Percentage Full:' + str(round(self.per,2)) + '%')
+            ax.set_title('Percentage Full: ' + str(round(self.per,2)) + '%')
     
             if self.per > 20:
                 ax.set_facecolor('white')
@@ -146,11 +167,31 @@ class SCL():
             return line,
 
  
-        animation = FuncAnimation(figure, update, interval=self.interval/1000)
+        animation = FuncAnimation(figure, update, interval=self.interval*1000,cache_frame_data = False)
         pyplot.xticks(rotation = 30)
         pyplot.show()
 
         self.tfile.close()
+        
+    def monitor(self, interval=60): #just monitor in the terminal
+        self.getpercentfull()
+        self.curr_time = datetime.now()
+        x_data, y_data = [self.curr_time], [self.per]
+        date_time = datetime.now().strftime("%Y_%m_%d_log")
+        self.tfile = open(date_time+ '.txt', 'a')
+        self.interval = interval
+        
+        try: # to allow killing with ctrl c to exit while loop
+            while True:
+                self.getpercentfull()
+                self.curr_time = datetime.now()
+                self.printdata()
+                items = str(self.curr_time.strftime("%H:%M:%S")) +","+" "+str(round(self.per,2))+"%"+"\n"
+                self.tfile.write(items)
+                time.sleep(interval)
+            
+        except:
+            self.tfile.close()
       
    
     def __str__(self):
@@ -161,8 +202,9 @@ class SCL():
         
    
   
-
-  
+if __name__ == "__main__":
+    scale = SCL()
+    scale.plot()
 
 
 

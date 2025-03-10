@@ -1,33 +1,37 @@
 # LN2_Monitor
 This project will use a USB connection to a dymo scale to help graph and weigh the percentage full of an LN2 trap. The percentage full is based on the maximum weight a LN2 trap can hold(about 28.26kg). The scale used in conjunction with this code is the Dymo Digital Shipping Scale (S100) (https://www.dymo.com/scales/dymo-s100-digital-usb-shipping-scale-100-pound-capacity/SAP_1776111.html)
 
-**Required Softwares:**
-download the softwares below first:
+![LN2_dewar](https://github.com/dav17393/LN2_Monitor/blob/main/LN2_dewar.png)
+
+**Required Software:**
+download the software below first:
 
 libusb-win32 (https://sourceforge.net/projects/libusb-win32/)
-After installing libusg-win32, click through the install screens until you get to "device selection". In device selection, select the USB input device with product ID 8009(pid:8009). 
+
+
+The easiest way to install it is to download the Zadig installer https://zadig.akeo.ie/
+
+Select your device and select the libusb-win32 driver. Then click replace or install driver
+
+![LN2_dewar](https://github.com/dav17393/LN2_Monitor/blob/main/zadig.png)
 
 to install the code: python3 -m pip install LN2_Monitor
-then go into python and input "from ln2_monitor import d1". 
-input "scale = d1.SCL()"
+then go into python and input
+```
+from ln2_monitor import d1 
+scale = d1.SCL()
+scale.monitor()
+```
+or 
+```
+scale.plot()
+```
 
-**To turn off "auto-sleep" mode on the scale, hold the kg/lb button and turn the scale on. **
+Both plot and monitor will generate text file logs in the current directory
 
-**For functions like "scale.getpercentfull()" and "scale.getkg()", the percent full or kg will be the last returned number, the numebrs above are from other functions that must be called to make the definitions in the class work.**
-**How to run the Software:** (not needed if pip installed)
+**To turn off "auto-sleep" mode on the scale, hold the kg/lb button (sometimes tare button) and turn the scale on. **
 
-After opening up the program, download the software above and run the software. In device selection, select the USB input device with product ID 8009(pid:8009). Then pipinstall pyusb, numpy, and matplot. Then run the code by changing the directory whichever folder the d1 file was downloaded to. Then switch powershell to python and import the d1 file. Set scale = d1.SCL() and run scale.main() or scale.plot() to start plotting and transferring the data to a txt file. You can also run scale.getkg() or scale.getdata() to get the kg or the array respectively. The basic minimum and maximum weights(kg) are set to default as the blucifer cryostat. Scale.setweight() can be run to change the minumum and maximum weight of the cryostat.
+The basic minimum and maximum weights(kg) are set to default as the dewar that comes with a bluefors cryostat. Scale.setweight() can be run to change the minumum and maximum weight of the cryostat.
 
-
-
-**The array that is returned when calling the scale.main(), scale.plot(), or scale.getdata() functions can be translated as shown below:**
-array('B'[3, 2, 12, 255, 0, 0])
-
-The first element is always 3 and negatable.
-The second element is also negatable.
-The third element will only return either 3 or 12, with 3 meaning the scale is in kg mode and 12 meaning the scale is in lbs/oz mode.
-The fourth element is the scale factor. A value of 255 means the scaling factor is 10^-1(0.1), a value of 254 means a scaling factor of 10^-2(0.01), and so on. 
-The fourth and fifth elements together are used to determine the weight.
-The sixth element is also negatable. 
 
 Enjoy!
